@@ -38,9 +38,9 @@ if __name__ == '__main__':
 		o Learning Rate : {args.lr},
 		""")
 	for ep in tqdm(range(args.epoch)):
-
+		avg_loss = 0
 		for index, batch in enumerate(dataset):
-	
+			
 			x, y = batch
 			x = x.to(device)
 			y = y.to(device)
@@ -48,9 +48,12 @@ if __name__ == '__main__':
 			output = model(x)
 			
 			loss = loss_fn(output, y)
-
+			avg_loss += loss.item()
 			optimizer.zero_grad()
 			loss.backward()
 			optimizer.step()
-
+			test = output[0][0].cpu().detach()
+		print('Avg Loss : [%.4f]' % (avg_loss/len(dataset)))		
+		plt.imshow(test, cmap='gray')
+		plt.show()
 
