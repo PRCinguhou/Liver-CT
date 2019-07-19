@@ -52,6 +52,9 @@ if __name__ == '__main__':
 			optimizer.zero_grad()
 			loss.backward()
 			optimizer.step()
+			test = output[0][0].cpu().detach()
 		print('Avg Loss : [%.4f]' % (avg_loss/len(dataset)))		
-		
+		if ep == 99:
+			plt.imshow(test, cmap='gray')
+			plt.show()
 
