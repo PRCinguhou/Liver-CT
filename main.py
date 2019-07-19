@@ -25,7 +25,7 @@ device = torch.device('cuda' if cuda else 'cpu')
 
 if __name__ == '__main__':
 
-	model = refine_net()
+	model = refine_net().to(device)
 	loss_fn = nn.BCELoss()
 	dataset = ct_dataset('./dataset/train/data', './dataset/train/label')
 	dataset = DataLoader(dataset, batch_size=args.batch_size, shuffle = True)
