@@ -40,7 +40,7 @@ if __name__ == '__main__':
 	for ep in tqdm(range(args.epoch)):
 
 		for index, batch in enumerate(dataset):
-			print(index)
+	
 			x, y = batch
 			x = x.to(device)
 			y = y.to(device)
