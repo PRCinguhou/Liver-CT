@@ -53,8 +53,4 @@ if __name__ == '__main__':
 			loss.backward()
 			optimizer.step()
 
-			test = output[0][0].detach()
-			if index == 50:
-				plt.imshow(test, cmap='gray')
-				plt.show()
 
