@@ -17,7 +17,7 @@ parser = ArgumentParser()
 parser.add_argument("-EPOCH", "--EPOCH", dest="epoch", type=int, default=100)
 parser.add_argument("-batch_size", dest='batch_size', type=int, default=10)
 parser.add_argument("-model", dest='model', type=str, default='refine-net')
-parser.add_argument("-lr", dest='lr', type=float, default=1e-4)
+parser.add_argument("-lr", dest='lr', type=float, default=8e-4)
 args = parser.parse_args()
 
 cuda = True if torch.cuda.is_available() else False
@@ -26,7 +26,8 @@ device = torch.device('cuda' if cuda else 'cpu')
 if __name__ == '__main__':
 
 	model = refine_net().to(device)
-	loss_fn = nn.BCELoss()
+	model.load_state_dict(torch.load('./model_1.pth'))
+	loss_fn = nn.MSELoss()
 	dataset = ct_dataset('./dataset/train/data', './dataset/train/label')
 	dataset = DataLoader(dataset, batch_size=args.batch_size, shuffle = True)
 	optimizer = optim.Adam(model.parameters(), lr = args.lr)
@@ -54,7 +55,8 @@ if __name__ == '__main__':
 			optimizer.step()
 			test = output[0][0].cpu().detach()
 		print('Avg Loss : [%.4f]' % (avg_loss/len(dataset)))		
-		if ep == 99:
+		if ep == 199:
 			plt.imshow(test, cmap='gray')
 			plt.show()
 
+		torch.save(model.state_dict(), './model_2.pth')

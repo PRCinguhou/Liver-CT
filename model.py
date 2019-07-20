@@ -100,9 +100,9 @@ class refine_net(nn.Module):
 		# 32 x 64 x 64
 		res = self.rcu3(e3) + e3.detach() + self.muti_fusion3(res).detach()
 		# 16 x 128 x 128
-		res = self.rcu(e2) + e2.detach() + self.muti_fusion2(res).detach()
+		res = self.rcu2(e2) + e2.detach() + self.muti_fusion2(res).detach()
 		# 8 x 256 x 256
-		res = self.rcu(e1) + e1.detach() + self.muti_fusion1(res).detach()
+		res = self.rcu1(e1) + e1.detach() + self.muti_fusion1(res).detach()
 		
 		res = self.final(res)
 
